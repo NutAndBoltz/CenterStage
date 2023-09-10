@@ -60,13 +60,13 @@ public class RobotHardware {
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
-    // commented out for testing
+    /* COMMENTED OUT FOR TESTING WEBCAM
     private DcMotor leftRear   = null;
     private DcMotor rightRear  = null;
     private DcMotor leftFront  = null;
     private DcMotor rightFront  = null;
     private Servo   servo1 = null;
-    private Servo   servo2 = null;
+    private Servo   servo2 = null;*/
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public RobotHardware(LinearOpMode opmode) {
@@ -80,6 +80,7 @@ public class RobotHardware {
      * All of the hardware devices are accessed via the hardware map, and initialized.
      */
     public void init()    {
+        /* COMMENTED OUT FOR TESTING WEBCAM
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
         leftRear  = myOpMode.hardwareMap.get(DcMotor.class, "left_rear");
         rightRear = myOpMode.hardwareMap.get(DcMotor.class, "right_rear");
@@ -98,7 +99,7 @@ public class RobotHardware {
         servo1 = myOpMode.hardwareMap.get(Servo.class, "servo_name1");
         servo2 = myOpMode.hardwareMap.get(Servo.class, "servo_name2");
         servo1.setPosition(0);
-        servo2.setPosition(0);
+        servo2.setPosition(0);*/
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();
