@@ -250,7 +250,7 @@ public class BlueAuto extends LinearOpMode {
         // This function takes the RGB frame, converts to YCrCb, and extracts the Cb channel to the 'Cb' variable
         void inputToCb(Mat input) {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
-            Core.extractChannel(YCrCb, Cb, 1);
+            Core.extractChannel(YCrCb, Cb, 2); // 2 selects the 3rd color channel which is Cb (blue) [the index counting starts at 0, 1, 2...]
         }
 
         @Override
@@ -286,7 +286,7 @@ public class BlueAuto extends LinearOpMode {
              * all-blue team prop.
              *
              * We then take the average pixel value of 3 different regions on that Cb
-             * channel, one positioned over strike mark. The brightest of the 3 regions
+             * channel, one positioned over strike mark. The brightest blue of the 3 regions
              * is where we assume the team prop to be.
              *
              * In order for this whole process to work correctly, each region
@@ -348,7 +348,7 @@ public class BlueAuto extends LinearOpMode {
                         region1_pointA, // First point which defines the rectangle
                         region1_pointB, // Second point which defines the rectangle
                         GREEN, // The color the rectangle is drawn in
-                        -1); // Negative thickness means solid fill
+                        4); // Negative thickness means solid fill
             }
             else if(max == avg2) // Was it from region 2?
             {
@@ -363,7 +363,7 @@ public class BlueAuto extends LinearOpMode {
                         region2_pointA, // First point which defines the rectangle
                         region2_pointB, // Second point which defines the rectangle
                         GREEN, // The color the rectangle is drawn in
-                        -1); // Negative thickness means solid fill
+                        4); // Negative thickness means solid fill
             }
             else if(max == avg3) // Was it from region 3?
             {
@@ -378,7 +378,7 @@ public class BlueAuto extends LinearOpMode {
                         region3_pointA, // First point which defines the rectangle
                         region3_pointB, // Second point which defines the rectangle
                         GREEN, // The color the rectangle is drawn in
-                        -1); // Negative thickness means solid fill
+                        4); // Negative thickness means solid fill
             }
 
             /*
