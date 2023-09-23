@@ -340,7 +340,7 @@ public class BlueAuto extends LinearOpMode {
                 position = PropPosition.LEFT; // Record our analysis
 
                 /*
-                 * Draw a solid rectangle on top of the chosen region.
+                 * Draw a  green rectangle on top of the chosen region.
                  * Simply a visual aid. Serves no functional purpose.
                  */
                 Imgproc.rectangle(
