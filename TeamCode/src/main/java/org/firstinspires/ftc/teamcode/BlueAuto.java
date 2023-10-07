@@ -184,12 +184,12 @@ public class BlueAuto extends LinearOpMode {
         static final Scalar GREEN = new Scalar(0, 255, 0);
 
         // The core values which define the location and size of the sample regions
-        static final Point BOX1_TOPLEFT_ANCHOR_POINT = new Point(33, 135);
-        static final Point BOX2_TOPLEFT_ANCHOR_POINT = new Point(123, 135);
-        static final Point BOX3_TOPLEFT_ANCHOR_POINT = new Point(213, 135);
+        static final Point BOX1_TOPLEFT_ANCHOR_POINT = new Point(23, 120);
+        static final Point BOX2_TOPLEFT_ANCHOR_POINT = new Point(143, 95);
+        static final Point BOX3_TOPLEFT_ANCHOR_POINT = new Point(253, 125);
 
-        static final int REGION_WIDTH = 75;
-        static final int REGION_HEIGHT = 75;
+        static final int REGION_WIDTH = 55;
+        static final int REGION_HEIGHT = 55;
         /*
          * Points which actually define the sample region rectangles, derived from above values
          *
