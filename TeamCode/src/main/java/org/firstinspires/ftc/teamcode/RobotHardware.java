@@ -30,10 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /*
  * This file works in conjunction with the External Hardware Class sample called: ConceptExternalHardwareClass.java
@@ -78,8 +75,9 @@ public class RobotHardware {
      * This method must be called ONCE when the OpMode is initialized.
      * <p>
      * All of the hardware devices are accessed via the hardware map, and initialized.
+     * @param hardwareMap
      */
-    public void init()    {
+    public void init(HardwareMap hardwareMap)    {
         /* COMMENTED OUT FOR TESTING WEBCAM
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
         leftRear  = myOpMode.hardwareMap.get(DcMotor.class, "left_rear");

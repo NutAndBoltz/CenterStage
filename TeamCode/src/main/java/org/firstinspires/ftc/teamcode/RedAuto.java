@@ -85,7 +85,7 @@ public class RedAuto extends LinearOpMode {
     public void runOpMode() {
 
         // initialize all the hardware, using the hardware class.
-        robot.init();
+        robot.init(hardwareMap);
 
         /*
          * Instantiate an OpenCvCamera object for the camera we'll be using.
