@@ -30,7 +30,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 /*
  * This file works in conjunction with the External Hardware Class sample called: ConceptExternalHardwareClass.java
@@ -57,33 +59,28 @@ public class RobotHardware {
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
-    /* COMMENTED OUT FOR TESTING WEBCAM
-    private DcMotor leftRear   = null;
-    private DcMotor rightRear  = null;
-    private DcMotor leftFront  = null;
-    private DcMotor rightFront  = null;
-    private Servo   servo1 = null;
-    private Servo   servo2 = null;*/
+    public DcMotor leftRear   = null;
+    public DcMotor rightRear  = null;
+    public DcMotor leftFront  = null;
+    public DcMotor rightFront  = null;
+    public Servo   servo1 = null;
+    public Servo   servo2 = null;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
-    public RobotHardware(LinearOpMode opmode) {
-        myOpMode = opmode;
-    }
+    public RobotHardware(LinearOpMode opmode) { myOpMode = opmode; }
 
     /**
      * Initialize all the robot's hardware.
      * This method must be called ONCE when the OpMode is initialized.
      * <p>
      * All of the hardware devices are accessed via the hardware map, and initialized.
-     * @param hardwareMap
      */
-    public void init(HardwareMap hardwareMap)    {
-        /* COMMENTED OUT FOR TESTING WEBCAM
+    public void init()    {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
-        leftRear  = myOpMode.hardwareMap.get(DcMotor.class, "left_rear");
-        rightRear = myOpMode.hardwareMap.get(DcMotor.class, "right_rear");
-        leftFront = myOpMode.hardwareMap.get(DcMotor.class, "left_front");
-        rightFront = myOpMode.hardwareMap.get(DcMotor.class, "right_front");
+        leftRear  = myOpMode.hardwareMap.get(DcMotor.class, "motorBL");
+        rightRear = myOpMode.hardwareMap.get(DcMotor.class, "motorBR");
+        leftFront = myOpMode.hardwareMap.get(DcMotor.class, "motorFL");
+        rightFront = myOpMode.hardwareMap.get(DcMotor.class, "motorFR");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -94,10 +91,10 @@ public class RobotHardware {
         rightFront.setDirection(DcMotor.Direction.FORWARD);
 
         // Define and initialize ALL installed servos.
-        servo1 = myOpMode.hardwareMap.get(Servo.class, "servo_name1");
-        servo2 = myOpMode.hardwareMap.get(Servo.class, "servo_name2");
-        servo1.setPosition(0);
-        servo2.setPosition(0);*/
+//        servo1 = myOpMode.hardwareMap.get(Servo.class, "servo_name1");
+//        servo2 = myOpMode.hardwareMap.get(Servo.class, "servo_name2");
+//        servo1.setPosition(0);
+//        servo2.setPosition(0);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();

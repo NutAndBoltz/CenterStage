@@ -29,10 +29,15 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -45,47 +50,26 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-/*
- * This OpMode illustrates the concept of driving a path based on encoder counts.
- * The code is structured as a LinearOpMode
- *
- * The code REQUIRES that you DO have encoders on the wheels,
- *   otherwise you would use: RobotAutoDriveByTime;
- *
- *  This code ALSO requires that the drive Motors have been configured such that a positive
- *  power command moves them forward, and causes the encoders to count UP.
- *
- *   The desired path in this example is:
- *   - Drive forward for 48 inches
- *   - Spin right for 12 Inches
- *   - Drive Backward for 24 inches
- *   - Stop and close the claw.
- *
- *  The code is written using a method called: encoderDrive(speed, leftInches, rightInches, timeoutS)
- *  that performs the actual movement.
- *  This method assumes that each movement is relative to the last stopping place.
- *  There are other ways to perform encoder based moves, but this method is probably the simplest.
- *  This code uses the RUN_TO_POSITION mode to enable the Motor controllers to generate the run profile
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
- */
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Red Auto", group="Robot")
+@Autonomous(name="Red Auto", group="Robot")
 public class RedAuto extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
-    RobotHardware robot       = new RobotHardware(this);
+    // RobotHardware robot       = new RobotHardware(this); //commented out because using SampleMecanumDrive for drive motors
     private ElapsedTime     runtime = new ElapsedTime();
     static OpenCvWebcam webcam;
     CenterStagePipeline pipeline; //pipeline = series of img coming through camera to process
+    CenterStagePipeline.PropPosition snapshotAnalysis = CenterStagePipeline.PropPosition.CENTER; // default
 
     @Override
     public void runOpMode() {
 
-        // initialize all the hardware, using the hardware class.
-        robot.init(hardwareMap);
+        // initialize all the hardware except drive motors, using the hardware class.
+        //robot.init();
+
+        // initialize the drive motors for odometry
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         /*
          * Instantiate an OpenCvCamera object for the camera we'll be using.
@@ -150,6 +134,78 @@ public class RedAuto extends LinearOpMode {
                  */
             }
         });
+
+        // ===========
+        // Trajectories
+        // ===========
+        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
+                .forward(24) //drive forward 24 inches
+                .splineTo(new Vector2d(2, 12), Math.toRadians(0)) //2" forward, 12" left
+                .build();
+
+        Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
+                .forward(30) //drive forward 30 inches
+                .build();
+
+        Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
+                .forward(24) //drive forward 24 inches
+                .splineTo(new Vector2d(2, -12), Math.toRadians(0)) //2" forward, 12" right
+                .build();
+        /*
+         * The INIT-loop:
+         * This REPLACES waitForStart!
+         */
+        while (!isStarted() && !isStopRequested())
+        {
+            telemetry.addData("Realtime analysis", pipeline.getAnalysis());
+            telemetry.update();
+
+            // Don't burn CPU cycles busy-looping in this sample
+            sleep(50);
+        }
+
+        /*
+         * The START command just came in: snapshot the current analysis now
+         * for later use. We must do this because the analysis will continue
+         * to change as the camera view changes once the robot starts moving!
+         */
+        snapshotAnalysis = pipeline.getAnalysis();
+
+        /*
+         * Show that snapshot on the telemetry
+         */
+        telemetry.addData("Snapshot post-START analysis", snapshotAnalysis);
+        telemetry.update();
+
+        switch (snapshotAnalysis)
+        {
+            case LEFT:
+            {
+                /* Your autonomous code */
+                // Drive to left strike mark
+                drive.followTrajectory(leftStrike);
+
+                break;
+            }
+
+            case CENTER:
+            {
+                /* Your autonomous code */
+                // Drive to center strike mark
+                drive.followTrajectory(centerStrike);
+
+                break;
+            }
+
+            case RIGHT:
+            {
+                /* Your autonomous code*/
+                // Drive to right strike mark
+                drive.followTrajectory(rightStrike);
+
+                break;
+            }
+        }
 
         telemetry.addLine("Waiting for start");
         telemetry.update();
@@ -248,10 +304,10 @@ public class RedAuto extends LinearOpMode {
         // Volatile since accessed by OpMode thread w/o synchronization
         private volatile PropPosition position = PropPosition.LEFT;
 
-        // This function takes the RGB frame, converts to YCrCb, and extracts the Cb channel to the 'Cb' variable
+        // This function takes the RGB frame, converts to YCrCb, and extracts the Cr channel to the 'Cr' variable
         void inputToCr(Mat input) {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
-            Core.extractChannel(YCrCb, Cr, 1); // 2 selects the 3rd color channel which is Cb (blue) [the index counting starts at 0, 1, 2...]
+            Core.extractChannel(YCrCb, Cr, 1); // 1 selects the 2nd color channel which is Cr (Chroma red) [the index counting starts at 0, 1, 2...]
         }
 
         @Override
