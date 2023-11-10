@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @TeleOp(name="Mecanum Drive", group="Robot")
 public class MecanumDrive extends LinearOpMode {
@@ -41,7 +42,7 @@ public class MecanumDrive extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
-    RobotHardware robot       = new RobotHardware(this);
+    RobotHardware robot = new RobotHardware(this);
 
     @Override
     public void runOpMode() {
@@ -50,7 +51,7 @@ public class MecanumDrive extends LinearOpMode {
         double turn          = 0;
 
         // initialize all the hardware, using the hardware class. See how clean and simple this is?
-        robot.init();
+        robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
         // Wait for the game to start (driver presses PLAY)

@@ -30,9 +30,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+
 
 /*
  * This file works in conjunction with the External Hardware Class sample called: ConceptExternalHardwareClass.java
@@ -67,15 +69,18 @@ public class RobotHardware {
     public Servo   servo2 = null;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
-    public RobotHardware(LinearOpMode opmode) { myOpMode = opmode; }
+    public RobotHardware(LinearOpMode opmode) {
+        myOpMode = opmode;
+    }
 
     /**
      * Initialize all the robot's hardware.
      * This method must be called ONCE when the OpMode is initialized.
      * <p>
      * All of the hardware devices are accessed via the hardware map, and initialized.
+     * @param hardwareMap
      */
-    public void init()    {
+    public void init(HardwareMap hardwareMap)    {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
         leftRear  = myOpMode.hardwareMap.get(DcMotor.class, "motorBL");
         rightRear = myOpMode.hardwareMap.get(DcMotor.class, "motorBR");

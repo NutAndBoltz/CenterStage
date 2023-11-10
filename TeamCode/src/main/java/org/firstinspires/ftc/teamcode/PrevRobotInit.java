@@ -30,7 +30,7 @@ public class PrevRobotInit {
 
 
     //from Encoder Sample
-    double     COUNTS_PER_MOTOR_REV    = 537.7 ;
+    double     COUNTS_PER_MOTOR_REV    = 537.7;
     double     WHEEL_DIAMETER_INCHES   = 4.0 ;  // For figuring circumference
     double     COUNTS_PER_INCH         = COUNTS_PER_MOTOR_REV / (WHEEL_DIAMETER_INCHES * Math.PI); //42.789 counts per inch
     double     DRIVE_SPEED             = 0.65;
