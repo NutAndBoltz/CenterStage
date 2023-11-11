@@ -80,7 +80,7 @@ public class RobotHardware {
      * All of the hardware devices are accessed via the hardware map, and initialized.
      * @param hardwareMap
      */
-    public void init(HardwareMap hardwareMap)    {
+    public void init()    {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
         leftRear  = myOpMode.hardwareMap.get(DcMotor.class, "motor_bl");
         rightRear = myOpMode.hardwareMap.get(DcMotor.class, "motor_br");

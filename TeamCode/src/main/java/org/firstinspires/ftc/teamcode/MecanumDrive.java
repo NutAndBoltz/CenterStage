@@ -51,7 +51,7 @@ public class MecanumDrive extends LinearOpMode {
         double turn          = 0;
 
         // initialize all the hardware, using the hardware class. See how clean and simple this is?
-        robot.init(hardwareMap);
+        robot.init();
 
         // Send telemetry message to signify robot waiting;
         // Wait for the game to start (driver presses PLAY)
