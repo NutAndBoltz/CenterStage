@@ -30,7 +30,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -51,8 +50,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
 
-@Autonomous(name="Red Auto", group="Robot")
-public class RedAuto extends LinearOpMode {
+@Autonomous(name="Right Red Auto", group="Robot")
+public class RightRedAuto extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
@@ -140,16 +139,19 @@ public class RedAuto extends LinearOpMode {
         // ===========
         Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
                 .forward(24) //drive forward 24 inches
-                .splineTo(new Vector2d(2, 12), Math.toRadians(0)) //2" forward, 12" left
+                .strafeLeft(7) //2" forward, 12" left
+                .back(10)
+
                 .build();
 
         Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
                 .forward(30) //drive forward 30 inches
+                //.strafeRight(5) //2" forward, 12" left
                 .build();
 
         Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
                 .forward(24) //drive forward 24 inches
-                .splineTo(new Vector2d(2, -12), Math.toRadians(0)) //2" forward, 12" right
+                .strafeRight(7) //2" forward, 12" left
                 .build();
         /*
          * The INIT-loop:

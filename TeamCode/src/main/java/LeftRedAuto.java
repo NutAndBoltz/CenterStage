@@ -27,16 +27,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -51,8 +49,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
 
-@Autonomous(name="Blue Auto", group="Robot")
-public class BlueAuto extends LinearOpMode {
+@Autonomous(name="Left Red Auto", group="Robot")
+public class LeftRedAuto extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
@@ -138,25 +136,19 @@ public class BlueAuto extends LinearOpMode {
         // ===========
         // Trajectories
         // ===========
-        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d()).splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,10), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
+        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
+                //.forward(24) //drive forward 24 inches
+                .splineTo(new Vector2d(3, -75), Math.toRadians(0)) //2" forward, 12" left
                 .build();
 
         Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Vector2d(30,0), Math.toRadians(0)) //2" forward, 12" left
-                //.strafeRight(5) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
+                //.forward(30) //drive forward 30 inches
+                .splineTo(new Vector2d(0, -30), Math.toRadians(0)) //2" forward, 12" left
                 .build();
 
         Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,-10), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
+                //.forward(24) //drive forward 24 inches
+                .splineTo(new Vector2d(0, -30), Math.toRadians(0)) //2" forward, 12" left
                 .build();
         /*
          * The INIT-loop:
@@ -294,37 +286,37 @@ public class BlueAuto extends LinearOpMode {
 
         // Creating variables
         Mat YCrCb = new Mat();
-        Mat Cb = new Mat();
+        Mat Cr = new Mat();
 
         //Box1
-        Mat region1_Cb;
+        Mat region1_Cr;
         int avg1;
 
         //Box2
-        Mat region2_Cb;
+        Mat region2_Cr;
         int avg2;
 
         //Box3
-        Mat region3_Cb;
+        Mat region3_Cr;
         int avg3;
 
         // Volatile since accessed by OpMode thread w/o synchronization
         private volatile PropPosition position = PropPosition.LEFT;
 
-        // This function takes the RGB frame, converts to YCrCb, and extracts the Cb channel to the 'Cb' variable
-        void inputToCb(Mat input) {
+        // This function takes the RGB frame, converts to YCrCb, and extracts the Cr channel to the 'Cr' variable
+        void inputToCr(Mat input) {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
-            Core.extractChannel(YCrCb, Cb, 2); // 2 selects the 3rd color channel which is Cb (blue) [the index counting starts at 0, 1, 2...]
+            Core.extractChannel(YCrCb, Cr, 1); // 1 selects the 2nd color channel which is Cr (Chroma red) [the index counting starts at 0, 1, 2...]
         }
 
         @Override
         public void init(Mat firstFrame) {
-            inputToCb(firstFrame);
+            inputToCr(firstFrame);
 
             //Figure out how much blue is in each region
-            region1_Cb = Cb.submat(new Rect(region1_pointA, region1_pointB));
-            region2_Cb = Cb.submat(new Rect(region2_pointA, region2_pointB));
-            region3_Cb = Cb.submat(new Rect(region3_pointA, region3_pointB));
+            region1_Cr = Cr.submat(new Rect(region1_pointA, region1_pointB));
+            region2_Cr = Cr.submat(new Rect(region2_pointA, region2_pointB));
+            region3_Cr = Cr.submat(new Rect(region3_pointA, region3_pointB));
         }
 
         @Override
@@ -362,11 +354,11 @@ public class BlueAuto extends LinearOpMode {
             /*
              * Get the Cb channel of the input frame after conversion to YCrCb
              */
-            inputToCb(input);
+            inputToCr(input);
 
-            avg1 = (int) Core.mean(region1_Cb).val[0];
-            avg2 = (int) Core.mean(region2_Cb).val[0];
-            avg3 = (int) Core.mean(region3_Cb).val[0];
+            avg1 = (int) Core.mean(region1_Cr).val[0];
+            avg2 = (int) Core.mean(region2_Cr).val[0];
+            avg3 = (int) Core.mean(region3_Cr).val[0];
 
             Imgproc.rectangle(
                     input, // Buffer to draw on
