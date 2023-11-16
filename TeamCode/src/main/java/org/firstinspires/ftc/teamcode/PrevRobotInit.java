@@ -56,10 +56,10 @@
 //
 //
 //        // Define and Initialize Motors
-//        motorFL = hardwareMap.get(DcMotor.class, "motorFL");
-//        motorFR = hardwareMap.get(DcMotor.class, "motorFR");
-//        motorBL = hardwareMap.get(DcMotor.class, "motorBL");
-//        motorBR = hardwareMap.get(DcMotor.class, "motorBR");
+//        motorFL = hardwareMap.get(DcMotor.class, "motor_fl");
+//        motorFR = hardwareMap.get(DcMotor.class, "motor_fr");
+//        motorBL = hardwareMap.get(DcMotor.class, "motor_bl");
+//        motorBR = hardwareMap.get(DcMotor.class, "motor_br");
 ////        armLiftLeft = hardwareMap.get(DcMotor.class, "armLiftLeft");
 ////        armLiftRight = hardwareMap.get(DcMotor.class, "armLiftRight");
 //        //waiter = hardwareMap.get(DcMotor.class, "waiter");

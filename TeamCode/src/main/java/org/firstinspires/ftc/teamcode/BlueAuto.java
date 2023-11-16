@@ -56,8 +56,8 @@ public class BlueAuto extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
-    // RobotHardware robot       = new RobotHardware(this); //commented out because using SampleMecanumDrive for drive motors
-    private ElapsedTime     runtime = new ElapsedTime();
+    // RobotHardware robot = new RobotHardware(this); //commented out because using SampleMecanumDrive for drive motors
+    private ElapsedTime runtime = new ElapsedTime();
     static OpenCvWebcam webcam;
     CenterStagePipeline pipeline; //pipeline = series of img coming through camera to process
     CenterStagePipeline.PropPosition snapshotAnalysis = CenterStagePipeline.PropPosition.CENTER; // default
@@ -81,6 +81,7 @@ public class BlueAuto extends LinearOpMode {
          * the RC phone). If no camera monitor is desired, use the alternate
          * single-parameter constructor instead (commented out below)
          */
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
 
@@ -138,26 +139,39 @@ public class BlueAuto extends LinearOpMode {
         // ===========
         // Trajectories
         // ===========
-        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d()).splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,10), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
+
+        Trajectory MoveForward = drive.trajectoryBuilder(new Pose2d())
+                .forward(20)
                 .build();
 
-        Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Vector2d(30,0), Math.toRadians(0)) //2" forward, 12" left
-                //.strafeRight(5) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
+        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
+                .strafeLeft(20)
                 .build();
 
         Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
-                .splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,-10), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
-                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
+                .strafeRight(20)
                 .build();
+
+//        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d()).splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
+//                .splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
+//                .splineToConstantHeading(new Vector2d(0,10), Math.toRadians(0)) //2" forward, 12" left
+//                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
+//                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
+//                .build();mul
+//
+//        Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
+//                .splineToConstantHeading(new Vector2d(30,0), Math.toRadians(0)) //2" forward, 12" left
+//                //.strafeRight(5) //2" forward, 12" left
+//                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
+//                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
+//                .build();
+//
+//        Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
+//                .splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
+//                .splineToConstantHeading(new Vector2d(0,-10), Math.toRadians(0)) //2" forward, 12" left
+//                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
+//                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
+//                .build();
         /*
          * The INIT-loop:
          * This REPLACES waitForStart!
@@ -199,7 +213,7 @@ public class BlueAuto extends LinearOpMode {
             {
                 /* Your autonomous code */
                 // Drive to center strike mark
-                drive.followTrajectory(centerStrike);
+                drive.followTrajectory(MoveForward);
 
                 break;
             }
@@ -315,7 +329,7 @@ public class BlueAuto extends LinearOpMode {
         void inputToCb(Mat input) {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
             Core.extractChannel(YCrCb, Cb, 2); // 2 selects the 3rd color channel which is Cb (blue) [the index counting starts at 0, 1, 2...]
-        }
+        } // motor_bl, motorBL
 
         @Override
         public void init(Mat firstFrame) {

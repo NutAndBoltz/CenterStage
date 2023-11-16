@@ -141,11 +141,10 @@ public class RightRedAuto extends LinearOpMode {
                 .forward(24) //drive forward 24 inches
                 .strafeLeft(7) //2" forward, 12" left
                 .back(10)
-
                 .build();
 
         Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
-                .forward(30) //drive forward 30 inches
+                .forward(24) //drive forward 30 inches
                 //.strafeRight(5) //2" forward, 12" left
                 .build();
 

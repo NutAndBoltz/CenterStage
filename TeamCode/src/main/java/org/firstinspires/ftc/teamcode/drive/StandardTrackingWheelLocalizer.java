@@ -50,12 +50,14 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         lastEncPositions = lastTrackingEncPositions;
         lastEncVels = lastTrackingEncVels;
 
-        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motorBL"));
-        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motorBR"));
-        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motorFR"));
+        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motor_bl"));
+        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motor_br"));
+        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motor_fr"));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
         leftEncoder.setDirection(Encoder.Direction.REVERSE);
+        rightEncoder.setDirection(Encoder.Direction.FORWARD);
+        frontEncoder.setDirection(Encoder.Direction.FORWARD);
     }
 
     public static double encoderTicksToInches(double ticks) {
@@ -100,3 +102,10 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         );
     }
 }
+
+
+// Total heading    Raw heading
+// 3634.0344        34.0344
+// 3576.3819        336.3819
+// 3547.944         307.944
+// 3536.855         296.855
