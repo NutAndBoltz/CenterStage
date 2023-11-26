@@ -141,15 +141,20 @@ public class BlueAuto extends LinearOpMode {
         // ===========
 
         Trajectory MoveForward = drive.trajectoryBuilder(new Pose2d())
-                .forward(20)
+                .forward(30.0)
+                .strafeLeft(30.0)
                 .build();
 
         Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
-                .strafeLeft(20)
+                .forward(20.0)
+                .strafeLeft(20.0)
+                .strafeLeft(30.0)
                 .build();
 
         Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(20)
+                .forward(20.0)
+                .strafeRight(20.0)
+                .strafeLeft(50.0)
                 .build();
 
 //        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d()).splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
