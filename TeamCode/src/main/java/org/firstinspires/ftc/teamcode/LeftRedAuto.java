@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
+package org.firstinspires.ftc.teamcode;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.RobotHardware;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -138,24 +139,25 @@ public class LeftRedAuto extends LinearOpMode {
         // ===========
         Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
                 //.forward(24) //drive forward 24 inches
-                .splineToConstantHeading(new Vector2d(40, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
-                .splineToConstantHeading(new Vector2d(0,-5), Math.toRadians(0))
-                //.splineToConstantHeading(new Vector2d(-5, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
-                .build();
+              .splineTo(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+//              .splineTo(new Vector2d(-5, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+//              .splineTo(new Vector2d(0,-10), 0)
+              .build();
 
-        Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
+        Trajectory centerStrike = drive.trajectoryBuilder(leftStrike.end())
                 //.forward(30) //drive forward 30 inches
-                .splineToConstantHeading(new Vector2d(40, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
-                .splineToConstantHeading(new Vector2d(0,-5), Math.toRadians(0))
-                //.splineToConstantHeading(new Vector2d(-5, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
+                .splineTo(new Vector2d(10, 0), 0)
+//                .splineTo(new Vector2d(-5, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+//                .splineTo(new Vector2d(0,-10), 0)
                 .build();
 
-        Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
+        Trajectory rightStrike = drive.trajectoryBuilder(centerStrike.end())
                 //.forward(24) //drive forward 24 inches
-                .splineToConstantHeading(new Vector2d(40, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
-                .splineToConstantHeading(new Vector2d(0,-5), Math.toRadians(0))
-                //.splineToConstantHeading(new Vector2d(-5, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
+                .splineTo(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+//                .splineTo(new Vector2d(-5, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+//                .splineTo(new Vector2d(0,-10), 0)
                 .build();
+
         /*
          * The INIT-loop:
          * This REPLACES waitForStart!
