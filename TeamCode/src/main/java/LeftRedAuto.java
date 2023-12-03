@@ -139,22 +139,22 @@ public class LeftRedAuto extends LinearOpMode {
         Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
                 //.forward(24) //drive forward 24 inches
                 .splineToConstantHeading(new Vector2d(40, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
-                .splineToConstantHeading(new Vector2d(5,0), Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(-5, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
+                .splineToConstantHeading(new Vector2d(0,-5), Math.toRadians(0))
+                //.splineToConstantHeading(new Vector2d(-5, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
                 .build();
 
         Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
                 //.forward(30) //drive forward 30 inches
                 .splineToConstantHeading(new Vector2d(40, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
-                .splineToConstantHeading(new Vector2d(5,0), Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(-5, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
+                .splineToConstantHeading(new Vector2d(0,-5), Math.toRadians(0))
+                //.splineToConstantHeading(new Vector2d(-5, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
                 .build();
 
         Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
                 //.forward(24) //drive forward 24 inches
                 .splineToConstantHeading(new Vector2d(40, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
-                .splineToConstantHeading(new Vector2d(5,0), Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(-5, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
+                .splineToConstantHeading(new Vector2d(0,-5), Math.toRadians(0))
+                //.splineToConstantHeading(new Vector2d(-5, 0), Math.toRadians(0)) //+/-x=front/back, +/-y=strafe right/left
                 .build();
         /*
          * The INIT-loop:

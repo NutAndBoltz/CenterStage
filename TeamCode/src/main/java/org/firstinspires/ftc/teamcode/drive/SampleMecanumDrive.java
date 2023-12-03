@@ -50,7 +50,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 
 /*
- * Simple mecanum drive hardware implementation for REV hardware.
+ * Sample mecnum drive hardware implementation for REV hardware.
  */
 
 @Config
