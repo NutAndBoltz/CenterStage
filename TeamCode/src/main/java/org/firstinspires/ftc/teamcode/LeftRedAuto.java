@@ -138,25 +138,30 @@ public class LeftRedAuto extends LinearOpMode {
         // Trajectories
         // ===========
         Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
-                //.forward(24) //drive forward 24 inches
-              .splineTo(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-//              .splineTo(new Vector2d(-5, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+//                .forward(40) //drive forward 24 inches
+//              .splineToConstantHeading(new Vector2d(40, 10), 0) //+/-x=front/back, -/+y=strafe right/left
+//              .splineToConstantHeading(new Vector2d(25, 10), 0) //+/-x=front/back, -/+y=strafe right/left
+                .forward(40)
 //              .splineTo(new Vector2d(0,-10), 0)
               .build();
 
         Trajectory centerStrike = drive.trajectoryBuilder(leftStrike.end())
-                //.forward(30) //drive forward 30 inches
-                .splineTo(new Vector2d(10, 0), 0)
-//                .splineTo(new Vector2d(-5, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-//                .splineTo(new Vector2d(0,-10), 0)
-                .build();
+                .strafeLeft(10)
 
-        Trajectory rightStrike = drive.trajectoryBuilder(centerStrike.end())
-                //.forward(24) //drive forward 24 inches
-                .splineTo(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-//                .splineTo(new Vector2d(-5, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-//                .splineTo(new Vector2d(0,-10), 0)
+////                .forward(40) //drive forward 30 inches
+////                .splineToConstantHeading(new Vector2d(40, -5), 0)
+////                .splineToConstantHeading(new Vector2d(25, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+//                .strafeLeft(5)
+////                .splineTo(new Vector2d(0,-10), 0)
                 .build();
+//
+//        Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
+////                .forward(40) //drive forward 24 inches
+////                .splineToConstantHeading(new Vector2d(40, -5), 0) //+/-x=front/back, +/-y=strafe right/left
+////                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+//                .strafeLeft(5)
+////                .splineTo(new Vector2d(0,-10), 0)
+//                .build();
 
         /*
          * The INIT-loop:
@@ -191,6 +196,7 @@ public class LeftRedAuto extends LinearOpMode {
                 /* Your autonomous code */
                 // Drive to left strike mark
                 drive.followTrajectory(leftStrike);
+                drive.followTrajectory(centerStrike);
 
                 break;
             }
@@ -199,6 +205,7 @@ public class LeftRedAuto extends LinearOpMode {
             {
                 /* Your autonomous code */
                 // Drive to center strike mark
+                drive.followTrajectory(leftStrike);
                 drive.followTrajectory(centerStrike);
 
                 break;
@@ -208,7 +215,8 @@ public class LeftRedAuto extends LinearOpMode {
             {
                 /* Your autonomous code*/
                 // Drive to right strike mark
-                drive.followTrajectory(rightStrike);
+                drive.followTrajectory(leftStrike);
+                drive.followTrajectory(centerStrike);
 
                 break;
             }
