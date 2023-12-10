@@ -147,7 +147,6 @@ public class LeftRedAuto extends LinearOpMode {
 
         Trajectory centerStrike = drive.trajectoryBuilder(leftStrike.end())
                 .strafeLeft(10)
-
 ////                .forward(40) //drive forward 30 inches
 ////                .splineToConstantHeading(new Vector2d(40, -5), 0)
 ////                .splineToConstantHeading(new Vector2d(25, 0), 0) //+/-x=front/back, +/-y=strafe right/left
