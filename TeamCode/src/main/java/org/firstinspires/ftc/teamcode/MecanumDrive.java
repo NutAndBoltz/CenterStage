@@ -65,9 +65,14 @@ public class MecanumDrive extends LinearOpMode {
             horizontal = DRIVE_SPEED*(gamepad1.left_stick_x); //strafe left, right
             turn = DRIVE_SPEED*(-gamepad1.right_stick_x); //rotate left, right
 
-            boolean release = gamepad1.left_bumper; // releases drone
+            boolean release = gamepad1.right_bumper; // releases drone
             boolean lift = gamepad1.b; // lifts arm
-            boolean drop = gamepad1.y; // drops arm
+            boolean drop = gamepad1.left_bumper; // drops arm
+            boolean openClaw = gamepad1.dpad_left; // opens claw
+            boolean closeClaw = gamepad1.dpad_right; // closes claw
+            boolean wristUp = gamepad1.dpad_right; // closes claw
+            boolean wristDown = gamepad1.dpad_right; // closes claw
+
 
             //Mecanum wheels - run motors
             robot.leftFront.setPower(vertical + horizontal - turn);
@@ -76,18 +81,38 @@ public class MecanumDrive extends LinearOpMode {
             robot.rightRear.setPower(vertical + horizontal + turn);
 
             if (release) {
-                robot.droneServo.setPosition(0.5); //releases drone
-                telemetry.addData("CURRENT ACTION:", "clamp pressed");
+                robot.droneServo.setPosition(1); //releases drone
+                telemetry.addData("CURRENT ACTION:", "drone launched");
                 telemetry.update();
             }
             if (lift) {
-                robot.beanStalk.setPosition(0.3); //raise arm
-                telemetry.addData("CURRENT ACTION:", "clamp pressed");
+                robot.elbow.setPosition(0.3); //raise arm
+                telemetry.addData("CURRENT ACTION:", "lifting arm");
                 telemetry.update();
             }
             if (drop) {
-                robot.beanStalk.setPosition(0.8); //lowers arm
-                telemetry.addData("CURRENT ACTION:", "clamp pressed");
+                robot.elbow.setPosition(0.8); //lowers arm
+                telemetry.addData("CURRENT ACTION:", "lowering arm");
+                telemetry.update();
+            }
+            if (openClaw) {
+                robot.claw.setPosition(0.8); //lowers arm
+                telemetry.addData("CURRENT ACTION:", "lowering arm");
+                telemetry.update();
+            }
+            if (closeClaw) {
+                robot.claw.setPosition(0.2); //lowers arm
+                telemetry.addData("CURRENT ACTION:", "lowering arm");
+                telemetry.update();
+            }
+            if (wristUp) {
+                robot.wrist.setPosition(0.8); //lowers arm
+                telemetry.addData("CURRENT ACTION:", "wrist arm");
+                telemetry.update();
+            }
+            if (wristDown) {
+                robot.wrist.setPosition(0.2); //lowers arm
+                telemetry.addData("CURRENT ACTION:", "wrist arm");
                 telemetry.update();
             }
         }

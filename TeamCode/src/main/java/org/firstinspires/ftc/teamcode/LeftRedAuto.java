@@ -139,10 +139,10 @@ public class LeftRedAuto extends LinearOpMode {
         // ===========
 
         Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-                .forward(5) //drive forward 24 inches
+//                .forward(10) //drive forward 24 inches
 //                .splineToConstantHeading(new Vector2d(40, -5), 0) //+/-x=front/back, +/-y=strafe right/left
 //                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-//                .strafeLeft(5)
+                .strafeRight(20)
 //                .splineTo(new Vector2d(0,-10), 0)
                 .build();
 
@@ -151,15 +151,23 @@ public class LeftRedAuto extends LinearOpMode {
 //                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
 //                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
 //                .strafeLeft(5)
-                .back(10)
+                .strafeRight(30)
 //                .splineTo(new Vector2d(0,-10), 0)
                 .build();
-
+//
         Trajectory traj3 = drive.trajectoryBuilder(new Pose2d())
 //                .forward(40) //drive forward 24 inches
 //                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
 //                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-                .strafeLeft(30)
+                .strafeRight(30)
+//                .splineTo(new Vector2d(0,-10), 0)
+                .build();
+
+        Trajectory traj4 = drive.trajectoryBuilder(new Pose2d())
+//                .forward(40) //drive forward 24 inches
+//                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+//                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
+                .back(50)
 //                .splineTo(new Vector2d(0,-10), 0)
                 .build();
 
@@ -199,6 +207,7 @@ public class LeftRedAuto extends LinearOpMode {
                 drive.followTrajectory(traj1);
                 drive.followTrajectory(traj2);
                 drive.followTrajectory(traj3);
+                drive.followTrajectory(traj4);
 
                 break;
             }
@@ -210,6 +219,7 @@ public class LeftRedAuto extends LinearOpMode {
                 drive.followTrajectory(traj1);
                 drive.followTrajectory(traj2);
                 drive.followTrajectory(traj3);
+                drive.followTrajectory(traj4);
 
                 break;
             }
@@ -221,6 +231,7 @@ public class LeftRedAuto extends LinearOpMode {
                 drive.followTrajectory(traj1);
                 drive.followTrajectory(traj2);
                 drive.followTrajectory(traj3);
+                drive.followTrajectory(traj4);
 
                 break;
             }

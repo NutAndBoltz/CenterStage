@@ -66,8 +66,9 @@ public class RobotHardware {
     public DcMotor leftFront = null;
     public DcMotor rightFront = null;
     public Servo droneServo = null;
-    public Servo beanStalk = null;
-    public Servo servo2 = null;
+    public Servo elbow = null;
+    public Servo wrist = null;
+    public Servo claw = null;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public RobotHardware(LinearOpMode opmode) {
@@ -99,9 +100,13 @@ public class RobotHardware {
 
         // Define and initialize ALL installed servos.
         droneServo = myOpMode.hardwareMap.get(Servo.class, "droneServo");
-        beanStalk = myOpMode.hardwareMap.get(Servo.class, "beanStalk");
+        elbow = myOpMode.hardwareMap.get(Servo.class, "elbow");
+        wrist = myOpMode.hardwareMap.get(Servo.class, "wrist");
+        claw = myOpMode.hardwareMap.get(Servo.class, "claw");
         droneServo.setPosition(0);
-        beanStalk.setPosition(0);
+        elbow.setPosition(0);
+        wrist.setPosition(0);
+        claw.setPosition(0);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();
