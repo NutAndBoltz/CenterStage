@@ -65,12 +65,31 @@ public class MecanumDrive extends LinearOpMode {
             horizontal = DRIVE_SPEED*(gamepad1.left_stick_x); //strafe left, right
             turn = DRIVE_SPEED*(-gamepad1.right_stick_x); //rotate left, right
 
+            boolean release = gamepad1.right_bumper; // releases drone
+            boolean lift = gamepad1.right_bumper; // lifts arm
+            boolean drop = gamepad1.right_bumper; // drops arm
+
             //Mecanum wheels - run motors
             robot.leftFront.setPower(vertical + horizontal - turn);
             robot.rightFront.setPower(vertical - horizontal + turn);
             robot.leftRear.setPower(vertical - horizontal - turn);
             robot.rightRear.setPower(vertical + horizontal + turn);
 
+            if (release) {
+                robot.droneServo.setPosition(0.5); //releases drone
+                telemetry.addData("CURRENT ACTION:", "clamp pressed");
+                telemetry.update();
+            }
+            if (lift) {
+                robot.beanStalk.setPosition(0.5); //raise arm
+                telemetry.addData("CURRENT ACTION:", "clamp pressed");
+                telemetry.update();
+            }
+            if (drop) {
+                robot.beanStalk.setPosition(0.5); //raise arm
+                telemetry.addData("CURRENT ACTION:", "clamp pressed");
+                telemetry.update();
+            }
         }
     }
 }
