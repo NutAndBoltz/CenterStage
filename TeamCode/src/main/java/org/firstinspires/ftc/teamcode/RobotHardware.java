@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -61,13 +62,14 @@ public class RobotHardware {
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
-    public DcMotor leftRear  = null;
+    public DcMotor leftRear = null;
     public DcMotor rightRear = null;
     public DcMotor leftFront = null;
     public DcMotor rightFront = null;
+    public DcMotor beanStalk = null;
     public Servo droneServo = null;
-    public Servo beanStalk = null;
-    public Servo servo2 = null;
+    public Servo claw = null;
+    public Servo wrist = null;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public RobotHardware(LinearOpMode opmode) {
@@ -82,12 +84,13 @@ public class RobotHardware {
      * @param hardwareMap
      */
 
-    public void init()    {
+    public void init() {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
-        leftRear  = myOpMode.hardwareMap.get(DcMotor.class, "motor_bl");
+        leftRear = myOpMode.hardwareMap.get(DcMotor.class, "motor_bl");
         rightRear = myOpMode.hardwareMap.get(DcMotor.class, "motor_br");
         leftFront = myOpMode.hardwareMap.get(DcMotor.class, "motor_fl");
         rightFront = myOpMode.hardwareMap.get(DcMotor.class, "motor_fr");
+        beanStalk = myOpMode.hardwareMap.get(DcMotor.class, "beanStalk");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -96,12 +99,15 @@ public class RobotHardware {
         rightRear.setDirection(DcMotor.Direction.FORWARD);
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
+        beanStalk.setDirection(DcMotor.Direction.REVERSE);
 
         // Define and initialize ALL installed servos.
         droneServo = myOpMode.hardwareMap.get(Servo.class, "droneServo");
-        beanStalk = myOpMode.hardwareMap.get(Servo.class, "beanStalk");
         droneServo.setPosition(0);
-        beanStalk.setPosition(0);
+        wrist = myOpMode.hardwareMap.get(Servo.class, "wrist");
+        wrist.setPosition(0);
+        claw = myOpMode.hardwareMap.get(Servo.class, "claw");
+        claw.setPosition(0);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();

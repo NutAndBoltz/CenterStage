@@ -37,18 +37,16 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class MecanumDrive extends LinearOpMode {
 
     // Define drive speed
-    public static final double DRIVE_SPEED   =  0.8 ;
+    public static final double DRIVE_SPEED = 0.8;
 
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
-    RobotHardware robot = new RobotHardware(this);
-
     @Override
     public void runOpMode() {
-        double vertical      = 0;
-        double horizontal    = 0;
-        double turn          = 0;
+        double vertical = 0;
+        double horizontal = 0;
+        double turn = 0;
 
         // initialize all the hardware, using the hardware class. See how clean and simple this is?
         robot.init();
@@ -61,35 +59,52 @@ public class MecanumDrive extends LinearOpMode {
         while (opModeIsActive()) {
 
             //Mecanum wheels - calculate power from gamepad
-            vertical = DRIVE_SPEED*(-gamepad1.left_stick_y); //move forward, backward
-            horizontal = DRIVE_SPEED*(gamepad1.left_stick_x); //strafe left, right
-            turn = DRIVE_SPEED*(-gamepad1.right_stick_x); //rotate left, right
+            vertical = DRIVE_SPEED * (-gamepad1.left_stick_y); //move forward, backward
+            horizontal = DRIVE_SPEED * (gamepad1.left_stick_x); //strafe left, right
+            turn = DRIVE_SPEED * (-gamepad1.right_stick_x); //rotate left, right
 
-            boolean release = gamepad1.left_bumper; // releases drone
-            boolean lift = gamepad1.b; // lifts arm
-            boolean drop = gamepad1.y; // drops arm
+            boolean release = gamepad1.b; // releases drone
+            boolean clamp = gamepad1.right_bumper; //clamps pixel
+            boolean unclamp = gamepad1.left_bumper; //unclamps pixel
+            boolean up = gamepad1.dpad_up; //wrist moves up
+            boolean down = gamepad1.dpad_down; //wrist moves down
+            double lift = (.5 * gamepad1.right_trigger); // lifts arm
+            double drop = (.5 * -gamepad1.left_trigger); // drops arm
 
             //Mecanum wheels - run motors
             robot.leftFront.setPower(vertical + horizontal - turn);
             robot.rightFront.setPower(vertical - horizontal + turn);
             robot.leftRear.setPower(vertical - horizontal - turn);
             robot.rightRear.setPower(vertical + horizontal + turn);
+            robot.beanStalk.setPower(lift + drop);
 
             if (release) {
                 robot.droneServo.setPosition(0.5); //releases drone
                 telemetry.addData("CURRENT ACTION:", "clamp pressed");
                 telemetry.update();
             }
-            if (lift) {
-                robot.beanStalk.setPosition(0.3); //raise arm
-                telemetry.addData("CURRENT ACTION:", "clamp pressed");
+            if (clamp) {
+                robot.claw.setPosition(robot.claw.getPosition()+.01); //clamp
+                telemetry.addData("CURRENT ACTION:", "clamp");
                 telemetry.update();
             }
-            if (drop) {
-                robot.beanStalk.setPosition(0.8); //lowers arm
-                telemetry.addData("CURRENT ACTION:", "clamp pressed");
+            if (unclamp) {
+                robot.claw.setPosition(robot.claw.getPosition()-.01); //unclamp
+                telemetry.addData("CURRENT ACTION:", "unclamp");
+                telemetry.update();
+            }
+            if (up) {
+                robot.wrist.setPosition(robot.wrist.getPosition()+.01); //wrist up
+                telemetry.addData("CURRENT ACTION:", "wrist up");
+                telemetry.update();
+            }
+            if (down) {
+                robot.wrist.setPosition(robot.wrist.getPosition()-.01); //wrist down
+                telemetry.addData("CURRENT ACTION:", "wrist down");
                 telemetry.update();
             }
         }
     }
+            RobotHardware robot = new RobotHardware(this);
 }
+
