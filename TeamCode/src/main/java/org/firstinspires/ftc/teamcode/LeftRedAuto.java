@@ -142,7 +142,7 @@ public class LeftRedAuto extends LinearOpMode {
 //                .forward(10) //drive forward 24 inches
 //                .splineToConstantHeading(new Vector2d(40, -5), 0) //+/-x=front/back, +/-y=strafe right/left
 //                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-                .strafeRight(20)
+                .strafeRight(20) //strafes a little toward the right
 //                .splineTo(new Vector2d(0,-10), 0)
                 .build();
 
@@ -151,7 +151,7 @@ public class LeftRedAuto extends LinearOpMode {
 //                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
 //                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
 //                .strafeLeft(5)
-                .strafeRight(30)
+                .strafeRight(30) //strafes a little more to the right
 //                .splineTo(new Vector2d(0,-10), 0)
                 .build();
 //
@@ -159,7 +159,7 @@ public class LeftRedAuto extends LinearOpMode {
 //                .forward(40) //drive forward 24 inches
 //                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
 //                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-                .strafeRight(30)
+                .strafeRight(30) //strafes a little more to the right
 //                .splineTo(new Vector2d(0,-10), 0)
                 .build();
 
@@ -167,7 +167,7 @@ public class LeftRedAuto extends LinearOpMode {
 //                .forward(40) //drive forward 24 inches
 //                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
 //                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-                .back(50)
+                .back(50) //strafes back (actually, no dying need for this step for the red side)
 //                .splineTo(new Vector2d(0,-10), 0)
                 .build();
 
