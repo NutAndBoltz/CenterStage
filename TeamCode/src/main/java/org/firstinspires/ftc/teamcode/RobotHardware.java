@@ -103,11 +103,11 @@ public class RobotHardware {
 
         // Define and initialize ALL installed servos.
         droneServo = myOpMode.hardwareMap.get(Servo.class, "droneServo");
-        droneServo.setPosition(0);
+        droneServo.setPosition(0.5);
         wrist = myOpMode.hardwareMap.get(Servo.class, "wrist");
         wrist.setPosition(0);
         claw = myOpMode.hardwareMap.get(Servo.class, "claw");
-        claw.setPosition(0);
+        claw.setPosition(0.5);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();

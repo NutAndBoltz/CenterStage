@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Mecanum Drive", group="Robot")
 public class MecanumDrive extends LinearOpMode {
@@ -39,6 +40,11 @@ public class MecanumDrive extends LinearOpMode {
     // Define drive speed
     public static final double DRIVE_SPEED = 0.8;
 
+    double clawOffset = 0;
+    public static final double CLAW_SPEED  = 0.02 ;                 // sets rate to move servo
+
+    double wristOffset = 0;
+    public static final double WRIST_SPEED  = 0.001 ;                 // sets rate to move servo
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
@@ -79,30 +85,39 @@ public class MecanumDrive extends LinearOpMode {
             robot.beanStalk.setPower(lift + drop);
 
             if (release) {
-                robot.droneServo.setPosition(0.5); //releases drone
-                telemetry.addData("CURRENT ACTION:", "clamp pressed");
+                robot.droneServo.setPosition(1); //releases drone
+                telemetry.addData("CURRENT ACTION:", "launch!");
                 telemetry.update();
             }
+
+            //move claw open and closed
             if (clamp) {
-                robot.claw.setPosition(robot.claw.getPosition()+.01); //clamp
+                robot.claw.setPosition(0);
                 telemetry.addData("CURRENT ACTION:", "clamp");
                 telemetry.update();
             }
-            if (unclamp) {
-                robot.claw.setPosition(robot.claw.getPosition()-.01); //unclamp
+            else if (unclamp) {
+                robot.claw.setPosition(0.5);
                 telemetry.addData("CURRENT ACTION:", "unclamp");
                 telemetry.update();
             }
+
+            //calculate wrist new target position
             if (up) {
-                robot.wrist.setPosition(robot.wrist.getPosition()+.01); //wrist up
-                telemetry.addData("CURRENT ACTION:", "wrist up");
+                wristOffset += WRIST_SPEED;
+                telemetry.addData("Wrist up:", wristOffset);
                 telemetry.update();
             }
-            if (down) {
-                robot.wrist.setPosition(robot.wrist.getPosition()-.01); //wrist down
-                telemetry.addData("CURRENT ACTION:", "wrist down");
+            else if (down) {
+                //robot.wrist.setPosition(0);
+                wristOffset -= WRIST_SPEED;
+                telemetry.addData("Wrist down:", wristOffset);
                 telemetry.update();
             }
+
+            //move wrist to new target position
+            wristOffset = Range.clip(wristOffset, 0, 1);
+            robot.wrist.setPosition(wristOffset);
         }
     }
             RobotHardware robot = new RobotHardware(this);
