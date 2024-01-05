@@ -28,15 +28,13 @@ package org.firstinspires.ftc.teamcode;/* Copyright (c) 2017 FIRST. All rights r
  */
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.RobotHardware;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -50,8 +48,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
 
-@Autonomous(name="Left Red Auto", group="Robot")
-public class LeftRedAuto extends LinearOpMode {
+@Autonomous(name="Red Left Auto", group="Robot")
+public class RedLeftAuto extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
@@ -138,24 +136,24 @@ public class LeftRedAuto extends LinearOpMode {
         // Trajectories
         // ===========
 
-        //drive forward to prepare for spike mark movement in next trajectory
-        Trajectory forward = drive.trajectoryBuilder(new Pose2d())
+        //left spike mark trajectory sequence
+        TrajectorySequence leftTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
                 .forward(20)
+                .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45)))
+                .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .build();
 
-        //drive to a point that is 7 inches forward and 8 inches left, turn 45 degrees counterclockwise
-        Trajectory left = drive.trajectoryBuilder(new Pose2d())
-                .lineToLinearHeading(new Pose2d(7, 8, Math.toRadians(45)))
+        //center spike mark trajectory sequence
+        TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
+                .forward(32)
+                .back(12)
                 .build();
 
-        //drive to a point that is 12 inches forward
-        Trajectory center = drive.trajectoryBuilder(new Pose2d())
-                .forward(12)
-                .build();
-
-        //drive to a point that is 7 inches forward and 8 inches right, turn 45 degrees clockwise
-        Trajectory right = drive.trajectoryBuilder(new Pose2d())
-                .lineToLinearHeading(new Pose2d(7, -8, Math.toRadians(-45)))
+        //right spike mark trajectory sequence
+        TrajectorySequence rightTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
+                .forward(20)
+                .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
+                .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .build();
 
 
@@ -191,8 +189,7 @@ public class LeftRedAuto extends LinearOpMode {
             {
                 /* Your autonomous code */
                 // Drive to left spike mark
-                drive.followTrajectory(forward);
-                drive.followTrajectory(left);
+                drive.followTrajectorySequence(leftTrajSeq);
 
                 break;
             }
@@ -201,8 +198,7 @@ public class LeftRedAuto extends LinearOpMode {
             {
                 /* Your autonomous code */
                 // Drive to center spike mark
-                drive.followTrajectory(forward);
-                drive.followTrajectory(center);
+                drive.followTrajectorySequence(centerTrajSeq);
 
                 break;
             }
@@ -211,8 +207,7 @@ public class LeftRedAuto extends LinearOpMode {
             {
                 /* Your autonomous code*/
                 // Drive to right spike mark
-                drive.followTrajectory(forward);
-                drive.followTrajectory(right);
+                drive.followTrajectorySequence(rightTrajSeq);
 
                 break;
             }

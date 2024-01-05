@@ -30,13 +30,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -51,8 +50,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
 
-@Autonomous(name="Blue Auto", group="Robot")
-public class BlueAuto extends LinearOpMode {
+@Autonomous(name="Blue Right Auto", group="Robot")
+public class BlueRightAuto extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
@@ -140,43 +139,26 @@ public class BlueAuto extends LinearOpMode {
         // Trajectories
         // ===========
 
-        Trajectory MoveForward = drive.trajectoryBuilder(new Pose2d())
-                .forward(30.0)
-                .strafeLeft(30.0)
+        //left spike mark trajectory sequence
+        TrajectorySequence leftTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
+                .forward(20)
+                .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45)))
+                .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .build();
 
-        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
-                .forward(20.0)
-                .strafeLeft(20.0)
-                .strafeLeft(30.0)
+        //center spike mark trajectory sequence
+        TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
+                .forward(32)
+                .back(12)
                 .build();
 
-        Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
-                .forward(20.0)
-                .strafeRight(20.0)
-                .strafeLeft(50.0)
+        //right spike mark trajectory sequence
+        TrajectorySequence rightTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
+                .forward(20)
+                .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
+                .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .build();
 
-//        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d()).splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
-//                .splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
-//                .splineToConstantHeading(new Vector2d(0,10), Math.toRadians(0)) //2" forward, 12" left
-//                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
-//                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
-//                .build();mul
-//
-//        Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
-//                .splineToConstantHeading(new Vector2d(30,0), Math.toRadians(0)) //2" forward, 12" left
-//                //.strafeRight(5) //2" forward, 12" left
-//                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
-//                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
-//                .build();
-//
-//        Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
-//                .splineToConstantHeading(new Vector2d(24,0), Math.toRadians(0)) //2" forward, 12" left
-//                .splineToConstantHeading(new Vector2d(0,-10), Math.toRadians(0)) //2" forward, 12" left
-//                .splineToConstantHeading(new Vector2d(-10,0), Math.toRadians(0)) //2" forward, 12" left
-//                .splineToConstantHeading(new Vector2d(0,50), Math.toRadians(0)) //2" forward, 12" left
-//                .build();
         /*
          * The INIT-loop:
          * This REPLACES waitForStart!
@@ -208,8 +190,8 @@ public class BlueAuto extends LinearOpMode {
             case LEFT:
             {
                 /* Your autonomous code */
-                // Drive to left strike mark
-                drive.followTrajectory(leftStrike);
+                // Drive to left spike mark
+                drive.followTrajectorySequence(leftTrajSeq);
 
                 break;
             }
@@ -217,8 +199,8 @@ public class BlueAuto extends LinearOpMode {
             case CENTER:
             {
                 /* Your autonomous code */
-                // Drive to center strike mark
-                drive.followTrajectory(MoveForward);
+                // Drive to center spike mark
+                drive.followTrajectorySequence(centerTrajSeq);
 
                 break;
             }
@@ -226,8 +208,8 @@ public class BlueAuto extends LinearOpMode {
             case RIGHT:
             {
                 /* Your autonomous code*/
-                // Drive to right strike mark
-                drive.followTrajectory(rightStrike);
+                // Drive to right spike mark
+                drive.followTrajectorySequence(rightTrajSeq);
 
                 break;
             }
