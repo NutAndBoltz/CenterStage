@@ -138,49 +138,25 @@ public class LeftRedAuto extends LinearOpMode {
         // Trajectories
         // ===========
 
+        //drive forward to prepare for spike mark movement in next trajectory
         Trajectory forward = drive.trajectoryBuilder(new Pose2d())
-                .strafeTo(new Vector2d(20, 0))
+                .forward(20)
                 .build();
 
+        //drive to a point that is 7 inches forward and 8 inches left, turn 45 degrees counterclockwise
+        Trajectory left = drive.trajectoryBuilder(new Pose2d())
+                .lineToLinearHeading(new Pose2d(7, 8, Math.toRadians(45)))
+                .build();
+
+        //drive to a point that is 12 inches forward
+        Trajectory center = drive.trajectoryBuilder(new Pose2d())
+                .forward(12)
+                .build();
+
+        //drive to a point that is 7 inches forward and 8 inches right, turn 45 degrees clockwise
         Trajectory right = drive.trajectoryBuilder(new Pose2d())
-                //.strafeTo(new Vector2d(9, -9))
                 .lineToLinearHeading(new Pose2d(7, -8, Math.toRadians(-45)))
                 .build();
-
-
-
-//        Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-////                .forward(10) //drive forward 24 inches
-////                .splineToConstantHeading(new Vector2d(40, -5), 0) //+/-x=front/back, +/-y=strafe right/left
-////                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-//                .strafeRight(20) //strafes a little toward the right
-////                .splineTo(new Vector2d(0,-10), 0)
-//                .build();
-//
-//        Trajectory traj2 = drive.trajectoryBuilder(new Pose2d())
-////                .forward(40) //drive forward 24 inches
-////                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-////                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-////                .strafeLeft(5)
-//                .strafeRight(30) //strafes a little more to the right
-////                .splineTo(new Vector2d(0,-10), 0)
-//                .build();
-////
-//        Trajectory traj3 = drive.trajectoryBuilder(new Pose2d())
-////                .forward(40) //drive forward 24 inches
-////                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-////                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-//                .strafeRight(30) //strafes a little more to the right
-////                .splineTo(new Vector2d(0,-10), 0)
-//                .build();
-//
-//        Trajectory traj4 = drive.trajectoryBuilder(new Pose2d())
-////                .forward(40) //drive forward 24 inches
-////                .splineToConstantHeading(new Vector2d(40, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-////                .splineToConstantHeading(new Vector2d(10, 0), 0) //+/-x=front/back, +/-y=strafe right/left
-//                .back(50) //strafes back (actually, no dying need for this step for the red side)
-////                .splineTo(new Vector2d(0,-10), 0)
-//                .build();
 
 
         /*
@@ -214,9 +190,9 @@ public class LeftRedAuto extends LinearOpMode {
             case LEFT:
             {
                 /* Your autonomous code */
-                // Drive to left strike mark
+                // Drive to left spike mark
                 drive.followTrajectory(forward);
-                drive.followTrajectory(right);
+                drive.followTrajectory(left);
 
                 break;
             }
@@ -224,9 +200,9 @@ public class LeftRedAuto extends LinearOpMode {
             case CENTER:
             {
                 /* Your autonomous code */
-                // Drive to traj2 strike mark
+                // Drive to center spike mark
                 drive.followTrajectory(forward);
-                drive.followTrajectory(right);
+                drive.followTrajectory(center);
 
                 break;
             }
@@ -234,7 +210,7 @@ public class LeftRedAuto extends LinearOpMode {
             case RIGHT:
             {
                 /* Your autonomous code*/
-                // Drive to right strike mark
+                // Drive to right spike mark
                 drive.followTrajectory(forward);
                 drive.followTrajectory(right);
 

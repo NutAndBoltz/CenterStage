@@ -137,21 +137,48 @@ public class RightRedAuto extends LinearOpMode {
         // ===========
         // Trajectories
         // ===========
-        Trajectory leftStrike = drive.trajectoryBuilder(new Pose2d())
-                .forward(24) //drive forward 24 inches
-                .strafeLeft(7) //2" forward, 12" left
-                .back(10)
+
+        //drive forward to prepare for spike mark movement in next trajectory
+        Trajectory forward = drive.trajectoryBuilder(new Pose2d())
+                .forward(20)
                 .build();
 
-        Trajectory centerStrike = drive.trajectoryBuilder(new Pose2d())
-                .forward(24) //drive forward 30 inches
-                //.strafeRight(5) //2" forward, 12" left
+        //drive to a point that is 7 inches forward and 8 inches left, turn 45 degrees counterclockwise
+        Trajectory left = drive.trajectoryBuilder(new Pose2d())
+                .lineToLinearHeading(new Pose2d(7, 8, Math.toRadians(45)))
                 .build();
 
-        Trajectory rightStrike = drive.trajectoryBuilder(new Pose2d())
-                .forward(24) //drive forward 24 inches
-                .strafeRight(7) //2" forward, 12" left
+        //reverse left trajectory to prepare to park in backstage
+        Trajectory leftReverse = drive.trajectoryBuilder(new Pose2d())
+                .lineToLinearHeading(new Pose2d(-7, -8, Math.toRadians(-45)))
                 .build();
+
+        //drive to a point that is 12 inches forward
+        Trajectory center = drive.trajectoryBuilder(new Pose2d())
+                .forward(12)
+                .build();
+
+        //reverse center trajectory to prepare to park in backstage
+        Trajectory centerReverse = drive.trajectoryBuilder(new Pose2d())
+                .back(12)
+                .build();
+
+        //drive to a point that is 7 inches forward and 8 inches right, turn 45 degrees clockwise
+        Trajectory right = drive.trajectoryBuilder(new Pose2d())
+                .lineToLinearHeading(new Pose2d(7, -8, Math.toRadians(-45)))
+                .build();
+
+        //reverse right trajectory to prepare to park in backstage
+        Trajectory rightReverse = drive.trajectoryBuilder(new Pose2d())
+                .lineToLinearHeading(new Pose2d(-7, 8, Math.toRadians(45)))
+                .build();
+
+        //park backstage
+        Trajectory park = drive.trajectoryBuilder(new Pose2d())
+                .strafeRight(33)
+                .build();
+
+
         /*
          * The INIT-loop:
          * This REPLACES waitForStart!
@@ -183,8 +210,11 @@ public class RightRedAuto extends LinearOpMode {
             case LEFT:
             {
                 /* Your autonomous code */
-                // Drive to left strike mark
-                drive.followTrajectory(leftStrike);
+                // Drive to left spike mark and then park
+                drive.followTrajectory(forward);
+                drive.followTrajectory(left);
+                drive.followTrajectory(leftReverse);
+                drive.followTrajectory(park);
 
                 break;
             }
@@ -192,8 +222,11 @@ public class RightRedAuto extends LinearOpMode {
             case CENTER:
             {
                 /* Your autonomous code */
-                // Drive to center strike mark
-                drive.followTrajectory(centerStrike);
+                // Drive to center spike mark and then park
+                drive.followTrajectory(forward);
+                drive.followTrajectory(center);
+                drive.followTrajectory(centerReverse);
+                drive.followTrajectory(park);
 
                 break;
             }
@@ -201,8 +234,11 @@ public class RightRedAuto extends LinearOpMode {
             case RIGHT:
             {
                 /* Your autonomous code*/
-                // Drive to right strike mark
-                drive.followTrajectory(rightStrike);
+                // Drive to right spike mark and then park
+                drive.followTrajectory(forward);
+                drive.followTrajectory(right);
+                drive.followTrajectory(rightReverse);
+                drive.followTrajectory(park);
 
                 break;
             }
