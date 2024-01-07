@@ -145,7 +145,7 @@ public class RedLeftAuto extends LinearOpMode {
 
         //center spike mark trajectory sequence
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
-                .forward(32)
+                .forward(27)
                 .back(12)
                 .build();
 
@@ -247,12 +247,12 @@ public class RedLeftAuto extends LinearOpMode {
         static final Scalar GREEN = new Scalar(0, 255, 0);
 
         // The core values which define the location and size of the sample regions
-        static final Point BOX1_TOPLEFT_ANCHOR_POINT = new Point(23, 120);
+        static final Point BOX1_TOPLEFT_ANCHOR_POINT = new Point(0, 120);
         static final Point BOX2_TOPLEFT_ANCHOR_POINT = new Point(143, 95);
         static final Point BOX3_TOPLEFT_ANCHOR_POINT = new Point(253, 125);
 
-        static final int REGION_WIDTH = 55;
-        static final int REGION_HEIGHT = 55;
+        static final int REGION_WIDTH = 65;
+        static final int REGION_HEIGHT = 85;
         /*
          * Points which actually define the sample region rectangles, derived from above values
          *

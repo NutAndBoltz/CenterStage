@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -142,14 +143,14 @@ public class BlueLeftAuto extends LinearOpMode {
         //left spike mark trajectory sequence
         TrajectorySequence leftTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
                 .forward(20)
-                .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45)))
-                .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45))) //45 degree angle
+                .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0))) //(x,y) coordinate point
                 .strafeLeft(33)
                 .build();
 
         //center spike mark trajectory sequence
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
-                .forward(32)
+                .forward(27)
                 .back(12)
                 .strafeLeft(33)
                 .build();
@@ -252,12 +253,12 @@ public class BlueLeftAuto extends LinearOpMode {
         static final Scalar GREEN = new Scalar(0, 255, 0);
 
         // The core values which define the location and size of the sample regions
-        static final Point BOX1_TOPLEFT_ANCHOR_POINT = new Point(23, 120);
+        static final Point BOX1_TOPLEFT_ANCHOR_POINT = new Point(0, 120);
         static final Point BOX2_TOPLEFT_ANCHOR_POINT = new Point(143, 95);
         static final Point BOX3_TOPLEFT_ANCHOR_POINT = new Point(253, 125);
 
-        static final int REGION_WIDTH = 55;
-        static final int REGION_HEIGHT = 55;
+        static final int REGION_WIDTH = 65;
+        static final int REGION_HEIGHT = 85;
         /*
          * Points which actually define the sample region rectangles, derived from above values
          *
@@ -313,7 +314,7 @@ public class BlueLeftAuto extends LinearOpMode {
         int avg3;
 
         // Volatile since accessed by OpMode thread w/o synchronization
-        private volatile PropPosition position = PropPosition.LEFT;
+        private volatile PropPosition position = PropPosition.RIGHT;
 
         // This function takes the RGB frame, converts to YCrCb, and extracts the Cb channel to the 'Cb' variable
         void inputToCb(Mat input) {
