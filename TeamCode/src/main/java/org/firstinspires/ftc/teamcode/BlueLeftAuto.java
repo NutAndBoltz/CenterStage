@@ -146,6 +146,7 @@ public class BlueLeftAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45))) //45 degree angle
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0))) //(x,y) coordinate point
                 .strafeLeft(33)
+                .turn(90)
                 .build();
 
         //center spike mark trajectory sequence
@@ -153,6 +154,7 @@ public class BlueLeftAuto extends LinearOpMode {
                 .forward(27)
                 .back(12)
                 .strafeLeft(33)
+                .turn(90)
                 .build();
 
         //right spike mark trajectory sequence
@@ -161,6 +163,7 @@ public class BlueLeftAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .strafeLeft(33)
+                .turn(90)
                 .build();
 
         /*
