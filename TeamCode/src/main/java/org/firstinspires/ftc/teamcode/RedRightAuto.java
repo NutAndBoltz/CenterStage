@@ -47,6 +47,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
+import com.qualcomm.robotcore.hardware.Servo;
+
 
 
 @Autonomous(name="Red Right Auto", group="Robot")
@@ -59,6 +61,9 @@ public class RedRightAuto extends LinearOpMode {
     static OpenCvWebcam webcam;
     CenterStagePipeline pipeline; //pipeline = series of img coming through camera to process
     CenterStagePipeline.PropPosition snapshotAnalysis = CenterStagePipeline.PropPosition.CENTER; // default
+
+    public Servo pixelPlacer = null;
+
 
     @Override
     public void runOpMode() {
@@ -100,11 +105,9 @@ public class RedRightAuto extends LinearOpMode {
          * If you really want to open synchronously, the old method is still available.
          */
         webcam.setMillisecondsPermissionTimeout(5000); // Timeout for obtaining permission is configurable. Set before opening.
-        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
-            public void onOpened()
-            {
+            public void onOpened() {
                 /*
                  * Tell the webcam to start streaming images to us! Note that you must make sure
                  * the resolution you specify is supported by the camera. If it is not, an exception
@@ -125,8 +128,7 @@ public class RedRightAuto extends LinearOpMode {
             }
 
             @Override
-            public void onError(int errorCode)
-            {
+            public void onError(int errorCode) {
                 /*
                  * This will be called if the camera could not be opened
                  */
@@ -142,24 +144,50 @@ public class RedRightAuto extends LinearOpMode {
                 .forward(20)
                 .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
-                .strafeRight(33)
+                .strafeRight(25)
+                .lineToLinearHeading(new Pose2d(48, -38, Math.toRadians(-90)))
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(.7);
+                }) // Lower servo
+                .waitSeconds(3)
+                .addTemporalMarker(() -> {
+                    //servo.setPosition(1)
+                }) // Raise servo
                 .build();
 
         //center spike mark and park trajectory sequence
-        TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
+        TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
                 .forward(27)
                 .back(12)
-                .strafeRight(33)
+                .strafeRight(25)
+                .lineToLinearHeading(new Pose2d(42, -38, Math.toRadians(-90)))
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(.7);
+                }) // Lower servo
+                .waitSeconds(3)
+                .addTemporalMarker(() -> {
+                    //servo.setPosition(1)
+                }) // Raise servo
                 .build();
 
         //right spike mark and park trajectory sequence
-        TrajectorySequence rightTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
+        TrajectorySequence rightTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
                 .forward(20)
                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
-                .strafeRight(33)
+                .strafeRight(25)
+                .lineToLinearHeading(new Pose2d(36, -38, Math.toRadians(-90)))
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(.7);
+                }) // Lower servo
+                .waitSeconds(3)
+                .addTemporalMarker(() -> {
+                    //servo.setPosition(1)
+                }) // Raise servo
                 .build();
 
+        pixelPlacer = hardwareMap.get(Servo.class, "pixelPlacer");
+        pixelPlacer.setPosition(0);
 
         /*
          * The INIT-loop:
