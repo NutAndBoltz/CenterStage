@@ -64,6 +64,8 @@ public class RedRightAuto extends LinearOpMode {
 
     public Servo pixelPlacer = null;
 
+    public static final double PIXEL_PLACEMENT_START_POSITION  = 0 ;     // sets initialized position
+    public static final double PIXEL_PLACEMENT_END_POSITION  = 0.7 ;     // sets position for placing pixel
 
     @Override
     public void runOpMode() {
@@ -147,12 +149,12 @@ public class RedRightAuto extends LinearOpMode {
                 .strafeRight(25)
                 .lineToLinearHeading(new Pose2d(48, -38, Math.toRadians(-90)))
                 .addTemporalMarker(() -> {
-                    pixelPlacer.setPosition(.7);
-                }) // Lower servo
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
+                }) // move servo to place pixel
                 .waitSeconds(3)
                 .addTemporalMarker(() -> {
-                    //servo.setPosition(1)
-                }) // Raise servo
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
+                }) // return servo to original position
                 .build();
 
         //center spike mark and park trajectory sequence
@@ -162,12 +164,12 @@ public class RedRightAuto extends LinearOpMode {
                 .strafeRight(25)
                 .lineToLinearHeading(new Pose2d(42, -38, Math.toRadians(-90)))
                 .addTemporalMarker(() -> {
-                    pixelPlacer.setPosition(.7);
-                }) // Lower servo
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
+                }) // move servo to place pixel
                 .waitSeconds(3)
                 .addTemporalMarker(() -> {
-                    //servo.setPosition(1)
-                }) // Raise servo
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
+                }) // return servo to original position
                 .build();
 
         //right spike mark and park trajectory sequence
@@ -178,16 +180,17 @@ public class RedRightAuto extends LinearOpMode {
                 .strafeRight(25)
                 .lineToLinearHeading(new Pose2d(36, -38, Math.toRadians(-90)))
                 .addTemporalMarker(() -> {
-                    pixelPlacer.setPosition(.7);
-                }) // Lower servo
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
+                }) // move servo to place pixel
                 .waitSeconds(3)
                 .addTemporalMarker(() -> {
-                    //servo.setPosition(1)
-                }) // Raise servo
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
+                }) // return servo to original position
                 .build();
 
+        //initialize servo
         pixelPlacer = hardwareMap.get(Servo.class, "pixelPlacer");
-        pixelPlacer.setPosition(0);
+        pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
 
         /*
          * The INIT-loop:
