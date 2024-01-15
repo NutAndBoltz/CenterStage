@@ -45,6 +45,9 @@ public class MecanumDrive extends LinearOpMode {
 
     double wristOffset = 0;
     public static final double WRIST_SPEED  = 0.001 ;                 // sets rate to move servo
+    public static final double WINCH_SPEED  = 0.5 ;                 // sets rate to move winch DC motor
+    public boolean hookPlacerUp  = false ;                 // keep track of hook placer position
+    public boolean pixelPlacerUp  = false ;                 // keep track of pixel placer position
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
@@ -70,10 +73,14 @@ public class MecanumDrive extends LinearOpMode {
             turn = DRIVE_SPEED * (-gamepad1.right_stick_x); //rotate left, right
 
             boolean release = gamepad1.b; // releases drone
+            boolean togglePixelPlacer = gamepad1.a; // moves pixelPlacer servo up and down
+            boolean toggleHookPlacer = gamepad1.x; // moves hookPlacer servo up and down
             boolean clamp = gamepad1.right_bumper; //clamps pixel
             boolean unclamp = gamepad1.left_bumper; //unclamps pixel
             boolean up = gamepad1.dpad_up; //wrist moves up
             boolean down = gamepad1.dpad_down; //wrist moves down
+            boolean left = gamepad1.dpad_left; //wrist moves down
+            boolean right = gamepad1.dpad_right; //wrist moves down
             double lift = (.5 * gamepad1.right_trigger); // lifts arm
             double drop = (.5 * -gamepad1.left_trigger); // drops arm
 
@@ -84,6 +91,7 @@ public class MecanumDrive extends LinearOpMode {
             robot.rightRear.setPower(vertical + horizontal + turn);
             robot.beanStalk.setPower(lift + drop);
 
+            //launch drone
             if (release) {
                 robot.droneServo.setPosition(1); //releases drone
                 telemetry.addData("CURRENT ACTION:", "launch!");
@@ -118,6 +126,36 @@ public class MecanumDrive extends LinearOpMode {
             //move wrist to new target position
             wristOffset = Range.clip(wristOffset, 0, 1);
             robot.wrist.setPosition(wristOffset);
+
+            //winch control
+            if(right){
+                robot.winch.setPower(WINCH_SPEED); //retract winch
+            }
+            else if(left){
+                robot.winch.setPower(-WINCH_SPEED); //extend winch
+            }
+            else {
+                robot.winch.setPower(0); //don't move
+            }
+
+            //hook placer toggle control
+            if(toggleHookPlacer && !hookPlacerUp){
+                robot.hookPlacer.setPosition(.5); //raise hookPlacer servo when button is pressed and it's down
+                hookPlacerUp = true;
+            } else if (toggleHookPlacer && hookPlacerUp){
+                robot.hookPlacer.setPosition(0); //lower hookPlacer servo when button is pressed and it's up
+                hookPlacerUp = false;
+            }
+
+            //pixel placer toggle control
+            if(togglePixelPlacer && !pixelPlacerUp){
+                robot.hookPlacer.setPosition(.7); //raise pixelPlacer servo when button is pressed and it's down
+                hookPlacerUp = true;
+            } else if (togglePixelPlacer && pixelPlacerUp){
+                robot.hookPlacer.setPosition(0); //lower pixelPlacer servo when button is pressed and it's up
+                hookPlacerUp = false;
+            }
+
         }
     }
             RobotHardware robot = new RobotHardware(this);
