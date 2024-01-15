@@ -120,7 +120,7 @@ public class RobotHardware {
         pixelPlacer.setPosition(0);
 
         hookPlacer = myOpMode.hardwareMap.get(Servo.class, "hookPlacer");
-        hookPlacer.setPosition(0);
+        hookPlacer.setPosition(.4);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();

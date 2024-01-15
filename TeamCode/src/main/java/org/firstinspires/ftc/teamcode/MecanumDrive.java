@@ -140,20 +140,20 @@ public class MecanumDrive extends LinearOpMode {
 
             //hook placer toggle control
             if(toggleHookPlacer && !hookPlacerUp){
-                robot.hookPlacer.setPosition(.5); //raise hookPlacer servo when button is pressed and it's down
+                robot.hookPlacer.setPosition(0.1); //raise hookPlacer servo when button is pressed and it's down
                 hookPlacerUp = true;
             } else if (toggleHookPlacer && hookPlacerUp){
-                robot.hookPlacer.setPosition(0); //lower hookPlacer servo when button is pressed and it's up
+                robot.hookPlacer.setPosition(0.4); //lower hookPlacer servo when button is pressed and it's up
                 hookPlacerUp = false;
             }
 
             //pixel placer toggle control
             if(togglePixelPlacer && !pixelPlacerUp){
-                robot.hookPlacer.setPosition(.7); //raise pixelPlacer servo when button is pressed and it's down
-                hookPlacerUp = true;
+                robot.pixelPlacer.setPosition(.2); //raise pixelPlacer servo when button is pressed and it's down
+                pixelPlacerUp = true;
             } else if (togglePixelPlacer && pixelPlacerUp){
-                robot.hookPlacer.setPosition(0); //lower pixelPlacer servo when button is pressed and it's up
-                hookPlacerUp = false;
+                robot.pixelPlacer.setPosition(.03); //lower pixelPlacer servo when button is pressed and it's up
+                pixelPlacerUp = false;
             }
 
         }

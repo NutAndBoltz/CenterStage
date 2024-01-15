@@ -66,8 +66,8 @@ public class BlueLeftAuto extends LinearOpMode {
 
     public Servo pixelPlacer = null;
 
-    public static final double PIXEL_PLACEMENT_START_POSITION  = 0 ;     // sets initialized position
-    public static final double PIXEL_PLACEMENT_END_POSITION  = 0.7 ;     // sets position for placing pixel
+    public static final double PIXEL_PLACEMENT_START_POSITION  = 0.03 ;     // sets initialized position
+    public static final double PIXEL_PLACEMENT_END_POSITION  = 0.45 ;     // sets position for placing pixel
 
     @Override
     public void runOpMode() {
@@ -153,7 +153,7 @@ public class BlueLeftAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45))) //45 degree angle
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0))) //(x,y) coordinate point
                 .strafeLeft(25)
-                .lineToLinearHeading(new Pose2d(20.5, 38, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(10.5, 38, Math.toRadians(90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
@@ -165,10 +165,10 @@ public class BlueLeftAuto extends LinearOpMode {
 
         //center spike mark trajectory sequence
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
-                .forward(27)
+                .forward(30)
                 .back(12)
                 .strafeLeft(25)
-                .lineToLinearHeading(new Pose2d(28.5, 38, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(18.5, 38, Math.toRadians(90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
@@ -184,7 +184,7 @@ public class BlueLeftAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .strafeLeft(25)
-                .lineToLinearHeading(new Pose2d(36.5, 38, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(26.5, 38, Math.toRadians(90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel

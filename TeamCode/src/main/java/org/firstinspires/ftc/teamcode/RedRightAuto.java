@@ -55,7 +55,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class RedRightAuto extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
-    // Prefix any hardware functions with "robot." to access this class.
+    // Prefix any hardware functions with "robot." to access xthis class.
     // RobotHardware robot       = new RobotHardware(this); //commented out because using SampleMecanumDrive for drive motors
     private ElapsedTime     runtime = new ElapsedTime();
     static OpenCvWebcam webcam;
@@ -64,8 +64,8 @@ public class RedRightAuto extends LinearOpMode {
 
     public Servo pixelPlacer = null;
 
-    public static final double PIXEL_PLACEMENT_START_POSITION  = 0 ;     // sets initialized position
-    public static final double PIXEL_PLACEMENT_END_POSITION  = 0.7 ;     // sets position for placing pixel
+    public static final double PIXEL_PLACEMENT_START_POSITION  = 0.03 ;     // sets initialized position
+    public static final double PIXEL_PLACEMENT_END_POSITION  = 0.45 ;     // sets position for placing pixel
 
     @Override
     public void runOpMode() {
@@ -159,7 +159,7 @@ public class RedRightAuto extends LinearOpMode {
 
         //center spike mark and park trajectory sequence
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
-                .forward(27)
+                .forward(30)
                 .back(12)
                 .strafeRight(25)
                 .lineToLinearHeading(new Pose2d(42, -38, Math.toRadians(-90)))
