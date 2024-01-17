@@ -151,7 +151,7 @@ public class RedRightAuto extends LinearOpMode {
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
-                .waitSeconds(3)
+                .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
                 }) // return servo to original position
@@ -166,7 +166,7 @@ public class RedRightAuto extends LinearOpMode {
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
-                .waitSeconds(3)
+                .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
                 }) // return servo to original position
@@ -182,7 +182,7 @@ public class RedRightAuto extends LinearOpMode {
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
-                .waitSeconds(3)
+                .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
                 }) // return servo to original position
