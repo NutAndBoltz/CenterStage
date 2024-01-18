@@ -184,7 +184,7 @@ public class BlueLeftAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .strafeLeft(25)
-                .lineToLinearHeading(new Pose2d(26.5, 38, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(26.5, 35, Math.toRadians(90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
