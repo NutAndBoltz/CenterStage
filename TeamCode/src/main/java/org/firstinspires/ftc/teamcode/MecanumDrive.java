@@ -46,8 +46,8 @@ public class MecanumDrive extends LinearOpMode {
     double wristOffset = 0;
     public static final double WRIST_SPEED  = 0.001 ;                 // sets rate to move servo
     public static final double WINCH_SPEED  = 0.5 ;                 // sets rate to move winch DC motor
-    public boolean hookPlacerUp  = false ;                 // keep track of hook placer position
-    public boolean pixelPlacerUp  = false ;                 // keep track of pixel placer position
+    boolean pixelPlacerUp = false; // keep track of pixel placer position for toggle control
+    boolean previouslyPressed = false; // keep track of pixel placer button press for toggle control
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
@@ -74,7 +74,8 @@ public class MecanumDrive extends LinearOpMode {
 
             boolean release = gamepad1.b; // releases drone
             boolean togglePixelPlacer = gamepad1.a; // moves pixelPlacer servo up and down
-            boolean toggleHookPlacer = gamepad1.x; // moves hookPlacer servo up and down
+            boolean hookPlacerUp = gamepad1.y; // moves hookPlacer servo up and down
+            boolean hookPlacerDown = gamepad1.x; // moves hookPlacer servo up and down
             boolean clamp = gamepad1.right_bumper; //clamps pixel
             boolean unclamp = gamepad1.left_bumper; //unclamps pixel
             boolean up = gamepad1.dpad_up; //wrist moves up
@@ -138,23 +139,26 @@ public class MecanumDrive extends LinearOpMode {
                 robot.winch.setPower(0); //don't move
             }
 
-            //hook placer toggle control
-            if(toggleHookPlacer && !hookPlacerUp){
-                robot.hookPlacer.setPosition(0.1); //raise hookPlacer servo when button is pressed and it's down
-                hookPlacerUp = true;
-            } else if (toggleHookPlacer && hookPlacerUp){
+            //hook placer two-button control
+            if(hookPlacerUp){
+                robot.hookPlacer.setPosition(0.1); //raise hookPlacer servo when button is pressed
+            } else if (hookPlacerDown){
                 robot.hookPlacer.setPosition(0.4); //lower hookPlacer servo when button is pressed and it's up
-                hookPlacerUp = false;
             }
 
             //pixel placer toggle control
-            if(togglePixelPlacer && !pixelPlacerUp){
-                robot.pixelPlacer.setPosition(.2); //raise pixelPlacer servo when button is pressed and it's down
-                pixelPlacerUp = true;
-            } else if (togglePixelPlacer && pixelPlacerUp){
-                robot.pixelPlacer.setPosition(.03); //lower pixelPlacer servo when button is pressed and it's up
-                pixelPlacerUp = false;
-            }
+            if (togglePixelPlacer){
+                if (!previouslyPressed) {
+                    if (pixelPlacerUp) {
+                        robot.pixelPlacer.setPosition(0.03); // Lower
+                    }
+                    else {
+                        robot.pixelPlacer.setPosition(.2); // Raise
+                    }
+                    pixelPlacerUp = !pixelPlacerUp;
+                }
+                previouslyPressed = true;
+            } else { previouslyPressed = false; }
 
         }
     }
