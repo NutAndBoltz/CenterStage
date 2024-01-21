@@ -152,23 +152,25 @@ public class BlueLeftAuto extends LinearOpMode {
                 .forward(20)
                 .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45))) //45 degree angle
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0))) //(x,y) coordinate point
-                .strafeLeft(25)
-                .lineToLinearHeading(new Pose2d(10.5, 38, Math.toRadians(90)))
+                .strafeLeft(23)
+                .lineToLinearHeading(new Pose2d(3.5, 36, Math.toRadians(90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
-                }) // return servo to original position
+                }) // return servo to original position\
+                .back(5)
+                .strafeLeft(15)
                 .build();
 
         //center spike mark trajectory sequence
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
-                .forward(30)
+                .forward(27)
                 .back(12)
-                .strafeLeft(25)
-                .lineToLinearHeading(new Pose2d(18.5, 38, Math.toRadians(90)))
+                .strafeLeft(23)
+                .lineToLinearHeading(new Pose2d(8.5, 36, Math.toRadians(90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
@@ -176,6 +178,8 @@ public class BlueLeftAuto extends LinearOpMode {
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
                 }) // return servo to original position
+                .back(5)
+                .strafeLeft(15)
                 .build();
 
         //right spike mark trajectory sequence
@@ -183,8 +187,8 @@ public class BlueLeftAuto extends LinearOpMode {
                 .forward(20)
                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
-                .strafeLeft(25)
-                .lineToLinearHeading(new Pose2d(26.5, 35, Math.toRadians(90)))
+                .strafeLeft(23)
+                .lineToLinearHeading(new Pose2d(12.5, 36, Math.toRadians(90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
@@ -192,6 +196,8 @@ public class BlueLeftAuto extends LinearOpMode {
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
                 }) // return servo to original position
+                .back(5)
+                .strafeLeft(15)
                 .build();
 
         //initialize servo

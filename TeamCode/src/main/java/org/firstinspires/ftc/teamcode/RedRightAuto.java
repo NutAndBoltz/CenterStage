@@ -147,7 +147,7 @@ public class RedRightAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .strafeRight(25)
-                .lineToLinearHeading(new Pose2d(48, -38, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(34, -38, Math.toRadians(-90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
@@ -159,10 +159,10 @@ public class RedRightAuto extends LinearOpMode {
 
         //center spike mark and park trajectory sequence
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
-                .forward(30)
+                .forward(27)
                 .back(12)
                 .strafeRight(25)
-                .lineToLinearHeading(new Pose2d(42, -38, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(30, -38, Math.toRadians(-90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
@@ -178,7 +178,7 @@ public class RedRightAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .strafeRight(25)
-                .lineToLinearHeading(new Pose2d(36, -38, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(28, -38, Math.toRadians(-90)))
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
