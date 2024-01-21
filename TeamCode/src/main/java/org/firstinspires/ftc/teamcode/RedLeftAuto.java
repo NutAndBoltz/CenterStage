@@ -145,7 +145,7 @@ public class RedLeftAuto extends LinearOpMode {
 
         //center spike mark trajectory sequence
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
-                .forward(30)
+                .forward(27)
                 .back(12)
                 .build();
 
