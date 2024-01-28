@@ -30,6 +30,7 @@ package org.firstinspires.ftc.teamcode;/* Copyright (c) 2017 FIRST. All rights r
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -58,6 +59,11 @@ public class RedLeftAuto extends LinearOpMode {
     static OpenCvWebcam webcam;
     CenterStagePipeline pipeline; //pipeline = series of img coming through camera to process
     CenterStagePipeline.PropPosition snapshotAnalysis = CenterStagePipeline.PropPosition.CENTER; // default
+
+    public Servo pixelPlacer = null;
+
+    public static final double PIXEL_PLACEMENT_START_POSITION  = 0.03 ;     // sets initialized position
+    public static final double PIXEL_PLACEMENT_END_POSITION  = 0.45 ;     // sets position for placing pixel
 
     @Override
     public void runOpMode() {
@@ -156,6 +162,9 @@ public class RedLeftAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .build();
 
+        //initialize servo
+        pixelPlacer = hardwareMap.get(Servo.class, "pixelPlacer");
+        pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
 
         /*
          * The INIT-loop:

@@ -51,8 +51,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 
-@Autonomous(name="Red Right Auto", group="Robot")
-public class RedRightAuto extends LinearOpMode {
+@Autonomous(name="Red Backdrop ParkRight", group="Robot")
+public class RedBackdropParkRight extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access xthis class.
@@ -155,6 +155,8 @@ public class RedRightAuto extends LinearOpMode {
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
                 }) // return servo to original position
+                .back(5)
+                .strafeRight(15)
                 .build();
 
         //center spike mark and park trajectory sequence
@@ -170,6 +172,8 @@ public class RedRightAuto extends LinearOpMode {
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
                 }) // return servo to original position
+                .back(5)
+                .strafeRight(15)
                 .build();
 
         //right spike mark and park trajectory sequence
@@ -186,6 +190,8 @@ public class RedRightAuto extends LinearOpMode {
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
                 }) // return servo to original position
+                .back(5)
+                .strafeRight(15)
                 .build();
 
         //initialize servo

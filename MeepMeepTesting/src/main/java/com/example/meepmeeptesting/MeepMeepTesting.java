@@ -18,8 +18,10 @@ public class MeepMeepTesting {
                                 .forward(20)
                                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
-                                .strafeLeft(25)
-                                .lineToLinearHeading(new Pose2d(26.5, 40, Math.toRadians(90)))
+                                .back(20)
+                                .strafeLeft(50)
+                                .forward(20)
+                                .lineToLinearHeading(new Pose2d(12.5, 36, Math.toRadians(90)))
                                 .addTemporalMarker(() -> {
                                     //pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                                 }) // move servo to place pixel
@@ -27,6 +29,8 @@ public class MeepMeepTesting {
                                 .addTemporalMarker(() -> {
                                     //pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
                                 }) // return servo to original position
+                                .back(5)
+                                .strafeLeft(15)
                                 .build()
                 );
 
@@ -37,3 +41,4 @@ public class MeepMeepTesting {
                 .start();
     }
 }
+//im sorry, i shouldn't have broke out like that.

@@ -30,7 +30,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -53,8 +52,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 
-@Autonomous(name="Blue Left Auto", group="Robot")
-public class BlueLeftAuto extends LinearOpMode {
+@Autonomous(name="Blue Backdrop ParkLeft", group="Robot")
+public class BlueBackdropParkLeft extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.

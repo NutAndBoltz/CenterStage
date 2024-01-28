@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -60,6 +61,11 @@ public class BlueRightAuto extends LinearOpMode {
     static OpenCvWebcam webcam;
     CenterStagePipeline pipeline; //pipeline = series of img coming through camera to process
     CenterStagePipeline.PropPosition snapshotAnalysis = CenterStagePipeline.PropPosition.CENTER; // default
+
+    public Servo pixelPlacer = null;
+
+    public static final double PIXEL_PLACEMENT_START_POSITION  = 0.03 ;     // sets initialized position
+    public static final double PIXEL_PLACEMENT_END_POSITION  = 0.45 ;     // sets position for placing pixel
 
     @Override
     public void runOpMode() {
@@ -144,12 +150,37 @@ public class BlueRightAuto extends LinearOpMode {
                 .forward(20)
                 .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
+                .back(20)
+                .strafeLeft(50)
+                .forward(20)
+                .lineToLinearHeading(new Pose2d(3.5, 36, Math.toRadians(90)))
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
+                }) // move servo to place pixel
+                .waitSeconds(1)
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
+                }) // return servo to original position\
+                .back(5)
+                .strafeLeft(15)
                 .build();
 
         //center spike mark trajectory sequence
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
                 .forward(27)
-                .back(12)
+                .back(27)
+                .strafeLeft(50)
+                .forward(20)
+                .lineToLinearHeading(new Pose2d(8.5, 36, Math.toRadians(90)))
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
+                }) // move servo to place pixel
+                .waitSeconds(1)
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
+                }) // return servo to original position
+                .back(5)
+                .strafeLeft(15)
                 .build();
 
         //right spike mark trajectory sequence
@@ -157,7 +188,24 @@ public class BlueRightAuto extends LinearOpMode {
                 .forward(20)
                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
+                .back(20)
+                .strafeLeft(50)
+                .forward(20)
+                .lineToLinearHeading(new Pose2d(12.5, 36, Math.toRadians(90)))
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
+                }) // move servo to place pixel
+                .waitSeconds(1)
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
+                }) // return servo to original position
+                .back(5)
+                .strafeLeft(15)
                 .build();
+
+        //initialize servo
+        pixelPlacer = hardwareMap.get(Servo.class, "pixelPlacer");
+        pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
 
         /*
          * The INIT-loop:
