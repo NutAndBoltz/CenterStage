@@ -147,12 +147,37 @@ public class RedLeftAuto extends LinearOpMode {
                 .forward(20)
                 .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
+                .back(20)
+                .strafeRight(72)
+                .lineToLinearHeading(new Pose2d(27, -72, Math.toRadians(-90))) //move into position to read april tags
+                .lineToLinearHeading(new Pose2d(23, -81, Math.toRadians(-90))) //move to place pixel
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
+                }) // move servo to place pixel
+                .waitSeconds(1)
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
+                }) // return servo to original position
+                .back(5)
+                .strafeRight(15)
                 .build();
 
         //center spike mark trajectory sequence
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
                 .forward(27)
-                .back(12)
+                .back(27)
+                .strafeRight(72)
+                .lineToLinearHeading(new Pose2d(27, -72, Math.toRadians(-90))) //move into position to read april tags
+                .lineToLinearHeading(new Pose2d(18, -81, Math.toRadians(-90))) //move to place pixel
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
+                }) // move servo to place pixel
+                .waitSeconds(1)
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
+                }) // return servo to original position
+                .back(5)
+                .strafeRight(15)
                 .build();
 
         //right spike mark trajectory sequence
@@ -160,6 +185,19 @@ public class RedLeftAuto extends LinearOpMode {
                 .forward(20)
                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
+                .back(20)
+                .strafeRight(72)
+                .lineToLinearHeading(new Pose2d(27, -72, Math.toRadians(-90))) //move into position to read april tags
+                .lineToLinearHeading(new Pose2d(13, -81, Math.toRadians(-90))) //move to place pixel
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
+                }) // move servo to place pixel
+                .waitSeconds(1)
+                .addTemporalMarker(() -> {
+                    pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
+                }) // return servo to original position
+                .back(5)
+                .strafeRight(15)
                 .build();
 
         //initialize servo

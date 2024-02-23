@@ -151,16 +151,16 @@ public class BlueRightAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(27, 8, Math.toRadians(45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .back(20)
-                .strafeLeft(50)
-                .forward(20)
-                .lineToLinearHeading(new Pose2d(3.5, 36, Math.toRadians(90)))
+                .strafeLeft(72)
+                .lineToLinearHeading(new Pose2d(27, 72, Math.toRadians(90))) //move into position to read april tags
+                .lineToLinearHeading(new Pose2d(13, 81, Math.toRadians(90))) //move to place pixel
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_START_POSITION);
-                }) // return servo to original position\
+                }) // return servo to original position
                 .back(5)
                 .strafeLeft(15)
                 .build();
@@ -169,9 +169,9 @@ public class BlueRightAuto extends LinearOpMode {
         TrajectorySequence centerTrajSeq = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
                 .forward(27)
                 .back(27)
-                .strafeLeft(50)
-                .forward(20)
-                .lineToLinearHeading(new Pose2d(8.5, 36, Math.toRadians(90)))
+                .strafeLeft(72)
+                .lineToLinearHeading(new Pose2d(27, 72, Math.toRadians(90))) //move into position to read april tags
+                .lineToLinearHeading(new Pose2d(18, 81, Math.toRadians(90))) //move to place pixel
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
@@ -189,9 +189,9 @@ public class BlueRightAuto extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(27, -8, Math.toRadians(-45)))
                 .lineToLinearHeading(new Pose2d(20, 0, Math.toRadians(0)))
                 .back(20)
-                .strafeLeft(50)
-                .forward(20)
-                .lineToLinearHeading(new Pose2d(12.5, 36, Math.toRadians(90)))
+                .strafeLeft(72)
+                .lineToLinearHeading(new Pose2d(27, 72, Math.toRadians(90))) //move into position to read april tags
+                .lineToLinearHeading(new Pose2d(23, 81, Math.toRadians(90))) //move to place pixel
                 .addTemporalMarker(() -> {
                     pixelPlacer.setPosition(PIXEL_PLACEMENT_END_POSITION);
                 }) // move servo to place pixel
